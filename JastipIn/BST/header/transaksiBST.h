@@ -1,117 +1,78 @@
-#ifndef NILAIBST_H_INCLUDED
-#define NILAIBST_H_INCLUDED
+#ifndef TRANSAKSIBST_H_INCLUDED
+#define TRANSAKSIBST_H_INCLUDED
 #include <string>
 #include <iostream>
 
 using namespace std;
 
-struct NilaiAkademik
+struct infotypeTransaksi
 {
-    ------------
+    string namaPelanggan;
+    string idPenyedia; //menghubungkan transaksi dengan parent(penyedia jastip)
+    string idBarang; // menghubungkan transaksi dengam child(barang)
+    int jumlahBarang;
+    int hargaSatuan; //Key
+    int totalHarga; // hasil dari jumlahBarang * hargaSatuan
+    string statusBayar; // contoh: "Lunas" atau "Belum Lunas"
 };
 
-typedef ------------ ------------; // variabel alias untuk infor
-typedef  struct ------------ *------------;   // variabel alias untuk pointer
+// pointer adrTransaksi: penunjuk alamat memori menuju suatu node di BST
+typedef  struct nodeTransaksi *adrTransaksi;   
 
 // kerangka dari elemen node
-struct nodeNilai
+struct nodeTransaksi
 {
-    ------------
+    infotypeTransaksi info; //menyimpan data transaksi
+    adrTransaksi left; // pointer ke anak kiri(hargsatuan lebih kecil)
+    adrTransaksi right; // pointer ke anak kanan(hargsatuan lebih besar)
 };
 
-// kerangka dari BST
-struct BST
+// wadah utama BST yang menyimpan alamat akar(root) 
+struct TreeTransaksi
 {
-    ------------
+      adrTransaksi root;
 };
 
-------------;
-/* I.S. grade terdefinisi
-   F.S. mengembalikan urutan grade T < E < D < C < BC < B < AB < A,
-        atau -1 jika grade tidak dikenal */
+//primitif
+// inisialisasi tree baru dalam keadaan kosong (root = NULL)
+void createTreeTransaksi(TreeTransaksi &T);
+// Mengecek apakah tree masih kosong (mengembalikan true jika root == NULL)
+bool isEmptyTreeTransaksi(TreeTransaksi T);
+// Alokasi memori untuk membuat satu node transaksi baru beserta datanya (left & right = NULL)
+adrTransaksi createNodeTransaksi(infotypeTransaksi x);
+// menghapus memori node yang sudah tidak terpakai agar tidak terjadi memory leak
+void dealokasiTransaksi(adrTransaksi &P);
 
-------------;
-/* I.S. record left dan right terdefinisi dengan grade yang dikenal
-   F.S. true jika record left berada sebelum record right sesuai urutan BST */
+//insert
+void insertTransaksi(adrTransaksi &root, adrTransaksi P);
 
-------------;
-/* I.S. komponen tugas, kuis, UTS, dan UAS terdefinisi
-   F.S. nilai akhir dibulatkan dari 15% tugas + 15% kuis + 35% UTS + 35% UAS;
-        grade T digunakan jika hasil berbobot di luar 0 sampai 100 */
 
-// pengecekan apakah BST kosong
-------------;
-/* I.S. BST T terdefinisi
-   F.S. true jika BST kosong dan false jika tidak kosong */
+// search
+// Mencari node transaksi berdasarkan key hargaSatuan (lebih cepat karena membagi ruang pencarian)
+adrTransaksi findTransaksi(adrTransaksi root, int hargaSatuan);
+// Mencari transaksi dengan hargaSatuan termurah (menelusuri cabang paling kiri)
+adrTransaksi findMinTransaksi(adrTransaksi root);
+// Mencari transaksi dengan hargaSatuan termahal (menelusuri cabang paling kanan)
+adrTransaksi findMaxTransaksi(adrTransaksi root);
 
-// pembuatan BST kosong
-------------;
-/* I.S. ~
-   F.S. terbentuk BST kosong */
 
-// manajemen memori
-------------;
-/* I.S. info x terdefinisi
-   F.S. mengembalikan alamat node berisi x dengan anak kiri dan kanan NULL */
+// delete
+void deleteTransaksi(adrTransaksi &root, int hargaSatuan);
 
-------------;
-/* I.S. pointer P terdefinisi
-   F.S. memori yang digunakan P dikembalikan ke sistem */
+// traversal
+// Menampilkan detail satu data transaksi agar tidak menulis cout berulang kali
+void printInfoTransaksi(infotypeTransaksi x);
+// Traversal Left -> Root -> Right: menampilkan transaksi TERURUT dari hargaSatuan termurah ke termahal
+void inOrderTransaksi(adrTransaksi root);
+// Traversal Root -> Left -> Right: menampilkan dari akar dulu, cocok untuk melihat struktur hirarki tree
+void preOrderTransaksi(adrTransaksi root);
+// Traversal Left -> Right -> Root: memproses anak terlebih dahulu sebelum parent
+void postOrderTransaksi(adrTransaksi root);
 
-// pencarian sebuah elemen node
-------------;
-/* I.S. BST T dan identitas mahasiswa, mata kuliah, serta periode terdefinisi
-   F.S. mengembalikan alamat node yang cocok atau NULL jika tidak ditemukan
-*/
-
-// penambahan elemen *
-------------;
-/* I.S. terdefinisi BST T yang mungkin kosong dan elemen node P
-   F.S. menempatkan elemen beralamat P menurut T < E < D < C < BC < B < AB < A,
-        lalu NIM, kode MK, semester, dan tahun akademik sebagai tie-breaker */
-
-// penghapusan node yang sudah diketahui alamatnya
-------------;
-/* I.S. terdefinisi BST T yang mungkin kosong dan elemen node P
-   F.S. P adalah alamat dari alamat elemen yang akan dihapus.
-        elemen lain menggantikan posisi elemen P yang dihapus
-        sesuai aturan BST*/
-
-------------;
-/* I.S. terdefinisi BST T dan identitas record nilai
-   F.S. record yang cocok dihapus jika ditemukan */
-
-------------;
-/* I.S. terdefinisi BST T
-   F.S. seluruh record ditampilkan dengan traversal in-order */
-
-------------;
-/* I.S. terdefinisi BST T
-   F.S. seluruh record ditampilkan dengan traversal pre-order */
-
-------------;
-/* I.S. terdefinisi BST T
-   F.S. seluruh record ditampilkan dengan traversal post-order */
-
-------------;
-/* I.S. terdefinisi BST T
-   F.S. mengembalikan node dengan grade minimum atau NULL jika BST kosong */
-
-------------;
-/* I.S. terdefinisi BST T
-   F.S. mengembalikan node dengan grade maksimum atau NULL jika BST kosong */
-
-------------;
-/* I.S. terdefinisi BST T
-   F.S. mengembalikan tinggi BST; tinggi pohon kosong adalah 0 */
-
-------------;
-/* I.S. terdefinisi BST T
-   F.S. mengembalikan jumlah node dalam BST */
-
-------------;
-/* I.S. ~
-   F.S. meminta data nilai akademik dari user */
-
+// pendukung
+// Menghitung total seluruh node transaksi di dalam BST (bisa dipakai untuk fungsional total transaksi aplikasi)
+int countNodeTransaksi(adrTransaksi root);
+// Menghitung tinggi/kedalaman maksimum BST untuk mengetahui keseimbangan tree
+int heightTransaksi(adrTransaksi root);
 
 #endif // NILAIBST_H_INCLUDED
