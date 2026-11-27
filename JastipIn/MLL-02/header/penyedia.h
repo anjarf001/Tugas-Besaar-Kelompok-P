@@ -96,5 +96,9 @@ void printPenyedia(ListPenyedia L);
 adrPenyedia findPenyedia(ListPenyedia L, string id);
 /* I.S. list dan id penyedia terdefinisi
    F.S. mengembalikan alamat elemen yang cocok atau NULL jika tidak ditemukan */
+
+void hapusSemuaPenyedia(ListPenyedia &L);
+/* I.S. terdefinisi list LMK yang mungkin kosong   
+   F.S. semua elemen list dihapus dan memori dikembalikan ke sistem */
    
 #endif // MAHASISWA_H_INCLUDED
