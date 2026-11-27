@@ -1,6 +1,6 @@
 #ifndef PENYEDIA_H_INCLUDED
 #define PENYEDIA_H_INCLUDED
-#include "krs.h"
+#include "penyedia.h"
 #include <string>
 #include <iostream>
 
