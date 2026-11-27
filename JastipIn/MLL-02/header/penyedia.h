@@ -1,6 +1,5 @@
 #ifndef PENYEDIA_H_INCLUDED
 #define PENYEDIA_H_INCLUDED
-#include "penyedia.h"
 #include <string>
 #include <iostream>
 

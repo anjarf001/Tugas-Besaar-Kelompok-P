@@ -77,18 +77,20 @@ void deleteAfterBarang(ListBarang &L, adrBarang Prec, adrBarang &P);
         yang akan dihapus dan elemen list setelah p akan terhubung
         langsung dengan prec atau tidak ada elemen list setelahnya */
 
+// tampil 
 void printBarang(ListBarang L);
 /* I.S. terdefinisi list  yang mungkin kosong
    F.S. jika list tidak kosong menampilkan semua info yang ada pada list
         jika list kosong menampilkan pesan data barang kosong*/
 
-------------;
-/* I.S. ~
-   F.S. meminta data mahasisswa dari user */
-
 // pencarian sebuah elemen list
 adrBarang findBarang(ListBarang L, string id);
 /* I.S. list dan kode mata kuliah terdefinisi
    F.S. mengembalikan alamat elemen yang cocok atau NULL jika tidak ditemukan */
+
+// menghapus semua elemen barang
+void hapusSemuaBarang(ListBarang &L);
+/* I.S. terdefinisi list LMK yang mungkin kosong
+   F.S. semua elemen list dihapus dan memorinya dikembalikan, list menjadi kosong */
 
 #endif // BARANG_H_INCLUDED

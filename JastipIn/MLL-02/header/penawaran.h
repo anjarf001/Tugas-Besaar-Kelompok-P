@@ -1,94 +1,111 @@
 #ifndef KRS_H_INCLUDED
 #define KRS_H_INCLUDED
-#include "matakuliah.h"
+#include "penyedia.h"
+#include "barang.h"
 #include <string>
 #include <iostream>
 
 using namespace std;
 
-struct ------------
-{
-    ------------
+struct infotypePenawaran {
+    int harga;
+    int stok;
+    string status;   // "ready" , "habis" , "PO"
 };
 
-typedef ------------ ------------;         // variabel alias untuk infor
-typedef  struct ------------ *------------;   // variabel alias untuk pointer
+typedef struct elmPenawaran *adrPenawaran; //alias untuk pointer ke elemen penawaran
 
 // kerangka dari elemen list
-struct ------------
-{
-    ------------
+struct elmPenawaran {
+    infotypePenawaran info;  
+    adrPenawaran next;       
+    adrPenawaran prev;       
+    adrPenyedia penyedia;    // pointer ke PARENT (penyedia yang menawarkan)
+    adrBarang barang;        // pointer ke CHILD  (barang yang ditawarkan)
 };
 
 // kerangka dari list
-struct ListKRS
-{
-    ------------
+struct ListPenawaran {
+    adrPenawaran first;
+    adrPenawaran last;
 };
 
 // pengecekan apakah list kosong
-------------;
-/* I.S. list LK terdefinisi
-   F.S. true jika list kosong dan false jika tidak kosong */
+bool isEmptyPenawaran(ListPenawaran L);
+/* I.S. terdefinisi list
+   F.S. mengembalikan true jika list kosong dan false jika list tidak kosong */
 
 // pembuatan list kosong
-------------;
+void createListPenawaran(ListPenawaran &L);
 /* I.S. ~
    F.S. terbentuk list kosong */
 
 // manajemen memori
-------------;
-/* I.S. info KRS x dan alamat mata kuliah terdefinisi
-   F.S. mengembalikan alamat elemen KRS berisi x, next NULL, dan menunjuk pMatakuliah */
+adrPenawaran createElmPenawaran(infotypePenawaran x, adrPenyedia P, adrBarang B);
+/* I.S. terdefinisi info x, alamat penyedia P dan alamat barang B
+   F.S. mengembalikan alamat elemen baru yang sudah dialokasi dengan info berisi x,
+        penyedia menunjuk P, barang menunjuk B, next dan prev bernilai NULL */
 
-------------;
-/* I.S. pointer P terdefinisi
-   F.S. elemen KRS di-dealokasi; elemen mata kuliah yang ditunjuk tidak ikut dihapus */
+void dealokasiPenawaran(adrPenawaran &P);
+/* I.S. terdefinisi elemen list P yang sudah tidak dipakai
+   F.S. memori elemen P dikembalikan ke sistem dan P bernilai NULL */
 
 // pencarian sebuah elemen list
-------------;
-/* I.S. list LK milik mahasiswa dan ID KRS terdefinisi
-   F.S. mengembalikan alamat elemen KRS yang cocok atau NULL jika tidak ditemukan
-*/
+adrPenawaran findPenawaran(ListPenawaran L, adrPenyedia P, adrBarang B);
+/* I.S. terdefinisi list, alamat penyedia P dan alamat barang B
+   F.S. mengembalikan alamat elemen penawaran yang menghubungkan P dan B
+        atau NULL jika tidak ditemukan */
 
 // penambahan elemen *
-------------;
-/* I.S. terdefinisi list LK yang mungkin kosong dan elemen list P
-   F.S. menempatkan elemen beralamat P pada awal list */
+void insertFirstPenawaran(ListPenawaran &L, adrPenawaran P);
+/* I.S. terdefinisi list yang mungkin kosong dan elemen list P
+   F.S. elemen list P menjadi elemen pertama list,
+        jika list sebelumnya kosong maka P juga menjadi elemen terakhir */
 
-------------;
-/* I.S. terdefinisi list LK yang mungkin kosong, elemen list P dan elemn list prec
-   F.S. menempatkan elemen beralamat P sesudah elemen beralamat Prec */
+void insertAfterPenawaran(ListPenawaran &L, adrPenawaran Prec, adrPenawaran P);
+/* I.S. terdefinisi list yang mungkin kosong, elemen list P dan elemen list prec
+   F.S. elemen list P berada tepat setelah prec,
+        jika prec adalah elemen terakhir maka P menjadi elemen terakhir,
+        jika list kosong atau prec NULL maka list tidak berubah */
 
-------------;
-/* I.S. terdefinisi list LK yang mungkin kosong dan elemen list P
-   F.S. menempatkan elemen beralamat P pada akhir list */
+void insertLastPenawaran(ListPenawaran &L, adrPenawaran P);
+/* I.S. terdefinisi list yang mungkin kosong dan elemen list P
+   F.S. elemen list P menjadi elemen terakhir list,
+        jika list sebelumnya kosong maka P juga menjadi elemen pertama */
 
 // penghapusan sebuah elemen
-------------;
-/* I.S. terdefinisi list LK yang mungkin kosong dan elemen list P
+void deleteFirstPenawaran(ListPenawaran &L, adrPenawaran &P);
+/* I.S. terdefinisi list yang mungkin kosong dan elemen list P
    F.S. P adalah alamat dari alamat elemen pertama list
-        yang akan dihapus dan elemen list selanjutnya akan menjadi
-        elemenlist pertama atau tidak ada elemen list pertama*/
+        yang akan dihapus dan elemen list setelahnya akan menjadi
+        elemen list pertama atau tidak ada elemen list pertama */
 
-------------;
-/* I.S. terdefinisi list LK yang mungkin kosong dan elemen list P
+void deleteLastPenawaran(ListPenawaran &L, adrPenawaran &P);
+/* I.S. terdefinisi list yang mungkin kosong dan elemen list P
    F.S. P adalah alamat dari alamat elemen terakhir list
         yang akan dihapus dan elemen list sebelumnya akan menjadi
-        elemenlist terakhir atau tidak ada elemen list terakhir */
+        elemen list terakhir atau tidak ada elemen list terakhir */
 
-------------;
-/* I.S. terdefinisi list LK yang mungkin kosong, elemen list P dan elemn list prec
+void deleteAfterPenawaran(ListPenawaran &L, adrPenawaran Prec, adrPenawaran &P);
+/* I.S. terdefinisi list yang mungkin kosong, elemen list P dan elemen list prec
    F.S. P adalah alamat dari alamat elemen list setelah prec
-        yang akan dihapus dan elemen list setelah p akan terhubung
+        yang akan dihapus dan elemen list setelah P akan terhubung
         langsung dengan prec atau tidak ada elemen list setelahnya */
 
-------------;
-/* I.S. terdefinisi list LK yang mungkin kosong
-   F.S. jika list tidak kosong menampilkan semua info yang ada pada list */
+void deleteElmPenawaran(ListPenawaran &L, adrPenawaran Q, adrPenawaran &P);
+/* I.S. terdefinisi list yang mungkin kosong dan elemen list Q yang ada di list
+   F.S. P adalah alamat elemen Q yang sudah dilepas dari list
+        P bernilai NULL jika list kosong atau Q NULL */
 
-------------;
-/* I.S. ~
-        F.S. meminta data KRS dari user */
+// tampil
+void printPenawaran(ListPenawaran L);
+/* I.S. terdefinisi list LMK yang mungkin kosong
+   F.S. jika list tidak kosong menampilkan semua penawaran (penyedia, barang, harga,
+        stok, status), jika list kosong menampilkan pesan data penawaran kosong */
+
+
+//baru oprasi primitif saja belum ada tambahan!!!
+
+
 
 #endif // KRS_H_INCLUDED
